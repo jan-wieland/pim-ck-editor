@@ -1,5 +1,6 @@
 {
   "name": "jan-wieland/pim-ck-editor",
+  "version": "1.0.0",
   "description": "CKEditor 5 WYSIWYG editor bundle for Pimcore 2024.4",
   "type": "pimcore-bundle",
   "license": "MIT",
