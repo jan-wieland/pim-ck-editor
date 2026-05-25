@@ -8,9 +8,6 @@ pimcore.plugin.pimckeditor = Ext.extend(pimcore.plugin.admin, {
   initialize: function () {
     pimcore.plugin.broker.registerPlugin(this);
 
-    // Das ist der entscheidende Fix für Pimcore 11:
-    // Wir registrieren den CKEditor als WYSIWYG-Provider, damit
-    // Pimcore weiß, wo es 'initializeWysiwyg' aufrufen kann!
     if (pimcore.wysiwyg) {
       pimcore.wysiwyg.registerProvider("ckeditor", {
         initializeWysiwyg: function (id, config) {
@@ -25,7 +22,6 @@ pimcore.plugin.pimckeditor = Ext.extend(pimcore.plugin.admin, {
         },
       });
 
-      // Setze CKEditor als Standard, falls Quill aus ist
       pimcore.wysiwyg.defaultProvider = "ckeditor";
     }
   },

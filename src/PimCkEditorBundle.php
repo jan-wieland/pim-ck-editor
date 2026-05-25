@@ -23,13 +23,14 @@ class PimCkEditorBundle extends AbstractPimcoreBundle implements
 
     public function getJsPaths(): array
     {
-        return ["/bundles/pimckeditor/js/pimcore-ckeditor-startup.js"];
+        return [];
     }
 
     public function getEditmodeJsPaths(): array
     {
         return [
             "/bundles/pimckeditor/js/ckeditor5.umd.js",
+            "/bundles/pimckeditor/js/pimcore-ckeditor-startup.js",
             "/bundles/pimckeditor/js/pimcore-ckeditor.js",
         ];
     }
