@@ -35,24 +35,24 @@ pimcore.bundle.ckeditor.editor = Class.create({
     const initialData = element.innerHTML;
     element.innerHTML = "";
 
-    CKEditor5.ClassicEditor.create(element, {
+    CKEDITOR.ClassicEditor.create(element, {
       initialData: initialData,
       plugins: [
-        CKEditor5.Essentials,
-        CKEditor5.Paragraph,
-        CKEditor5.Bold,
-        CKEditor5.Italic,
-        CKEditor5.Underline,
-        CKEditor5.Strikethrough,
-        CKEditor5.Heading,
-        CKEditor5.Link,
-        CKEditor5.List,
-        CKEditor5.BlockQuote,
-        CKEditor5.Table,
-        CKEditor5.TableToolbar,
-        CKEditor5.Alignment,
-        CKEditor5.HorizontalLine,
-        CKEditor5.SourceEditing,
+        CKEDITOR.Essentials,
+        CKEDITOR.Paragraph,
+        CKEDITOR.Bold,
+        CKEDITOR.Italic,
+        CKEDITOR.Underline,
+        CKEDITOR.Strikethrough,
+        CKEDITOR.Heading,
+        CKEDITOR.Link,
+        CKEDITOR.List,
+        CKEDITOR.BlockQuote,
+        CKEDITOR.Table,
+        CKEDITOR.TableToolbar,
+        CKEDITOR.Alignment,
+        CKEDITOR.HorizontalLine,
+        CKEDITOR.SourceEditing,
       ],
       toolbar: {
         items: [
