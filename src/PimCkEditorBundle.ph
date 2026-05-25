@@ -6,6 +6,13 @@ use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 
 class PimCkEditorBundle extends AbstractPimcoreBundle
 {
+    public function getJsPaths(): array
+    {
+        return [
+            '/bundles/pimckeditor/js/pimcore-ckeditor-startup.js',
+        ];
+    }
+
     public function getEditmodeJsPaths(): array
     {
         return [
