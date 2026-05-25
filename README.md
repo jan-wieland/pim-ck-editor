@@ -1,0 +1,1 @@
+# pim-ck-editor
