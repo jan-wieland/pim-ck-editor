@@ -36,6 +36,7 @@ pimcore.bundle.ckeditor.editor = Class.create({
     element.innerHTML = "";
 
     CKEDITOR.ClassicEditor.create(element, {
+      licenseKey: "GPL",
       initialData: initialData,
       plugins: [
         CKEDITOR.Essentials,
