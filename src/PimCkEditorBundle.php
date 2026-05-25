@@ -5,6 +5,7 @@ namespace JanWieland\PimCkEditorBundle;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 use Pimcore\Extension\Bundle\PimcoreBundleAdminClassicInterface;
 use Pimcore\Extension\Bundle\Traits\BundleAdminClassicTrait;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class PimCkEditorBundle extends AbstractPimcoreBundle implements
     PimcoreBundleAdminClassicInterface
@@ -19,6 +20,15 @@ class PimCkEditorBundle extends AbstractPimcoreBundle implements
     public function getComposerPackageName(): string
     {
         return "jan-wieland/pim-ck-editor";
+    }
+
+    public function getContainerExtension(): ?ExtensionInterface
+    {
+        if (null === $this->extension) {
+            $this->extension = $this->createContainerExtension();
+        }
+
+        return $this->extension;
     }
 
     public function getJsPaths(): array
