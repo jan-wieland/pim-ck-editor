@@ -1,4 +1,5 @@
 <?php
+
 namespace JanWieland\PimCkEditorBundle;
 
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
@@ -13,6 +14,11 @@ class PimCkEditorBundle extends AbstractPimcoreBundle implements
     public function getPath(): string
     {
         return dirname(__DIR__);
+    }
+
+    public function getComposerPackageName(): string
+    {
+        return "jan-wieland/pim-ck-editor";
     }
 
     public function getJsPaths(): array
