@@ -1,0 +1,5 @@
+pimcore:
+  bundles:
+    pim_ck_editor:
+      wysiwyg:
+        provider: 'JanWieland\PimCkEditorBundle\Wysiwyg\CkEditorProvider'
