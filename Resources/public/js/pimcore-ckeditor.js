@@ -1,18 +1,42 @@
-(function () {
-  document.addEventListener(pimcore.events.initializeWysiwyg, (e) => {
-    const { textarea, context } = e.detail;
-    const textareaId = textarea.id;
+pimcore.registerNS("pimcore.bundle.ckeditor.editor");
+pimcore.bundle.ckeditor.editor = Class.create({
+  editors: new Map(),
+
+  initialize: function () {
+    if (!parent.pimcore.wysiwyg) {
+      parent.pimcore.wysiwyg = {};
+      parent.pimcore.wysiwyg.editors = [];
+    }
+    parent.pimcore.wysiwyg.editors.push("ckeditor");
+
+    document.addEventListener(
+      parent.pimcore.events.initializeWysiwyg,
+      this.initializeWysiwyg.bind(this),
+    );
+    document.addEventListener(
+      parent.pimcore.events.createWysiwyg,
+      this.createWysiwyg.bind(this),
+    );
+    document.addEventListener(
+      parent.pimcore.events.beforeDestroyWysiwyg,
+      this.beforeDestroyWysiwyg.bind(this),
+    );
+  },
+
+  initializeWysiwyg: function (e) {
+    this.config = e.detail.config ?? {};
+  },
+
+  createWysiwyg: function (e) {
+    const textareaId = e.detail.textarea.id ?? e.detail.textarea;
     const element = document.getElementById(textareaId);
     if (!element) return;
 
-    // Wrapper für CKEditor erstellen
-    const wrapper = document.createElement("div");
-    wrapper.id = textareaId + "_ck_wrapper";
-    element.parentNode.insertBefore(wrapper, element);
-    element.style.display = "none";
+    const initialData = element.innerHTML;
+    element.innerHTML = "";
 
-    CKEditor5.ClassicEditor.create(wrapper, {
-      initialData: element.value,
+    CKEditor5.ClassicEditor.create(element, {
+      initialData: initialData,
       plugins: [
         CKEditor5.Essentials,
         CKEditor5.Paragraph,
@@ -60,17 +84,7 @@
           openInNewTab: {
             mode: "manual",
             label: "In neuem Tab öffnen",
-            attributes: {
-              target: "_blank",
-              rel: "noopener noreferrer",
-            },
-          },
-          addCssClass: {
-            mode: "manual",
-            label: "CSS-Klasse",
-            attributes: {
-              class: "link",
-            },
+            attributes: { target: "_blank", rel: "noopener noreferrer" },
           },
         },
         defaultProtocol: "https://",
@@ -113,34 +127,33 @@
       },
     })
       .then((editor) => {
-        // Änderungen an Pimcore melden
+        this.editors.set(textareaId, editor);
+
         editor.model.document.on("change:data", () => {
           document.dispatchEvent(
             new CustomEvent(pimcore.events.changeWysiwyg, {
               detail: {
                 e: { target: { id: textareaId } },
                 data: editor.getData(),
-                context: context,
+                context: e.detail.context,
               },
             }),
           );
         });
-
-        // Editor-Instanz speichern für späteres Cleanup
-        element._ckEditor = editor;
       })
       .catch((error) => {
         console.error("CKEditor init error:", error);
       });
-  });
+  },
 
-  // Cleanup wenn Pimcore den Editor zerstört
-  document.addEventListener(pimcore.events.destroyWysiwyg, (e) => {
-    const { textarea } = e.detail;
-    const element = document.getElementById(textarea.id);
-    if (element && element._ckEditor) {
-      element._ckEditor.destroy();
-      element._ckEditor = null;
+  beforeDestroyWysiwyg: function (e) {
+    const textareaId = e.detail.textarea.id ?? e.detail.textarea;
+    const editor = this.editors.get(textareaId);
+    if (editor) {
+      editor.destroy();
+      this.editors.delete(textareaId);
     }
-  });
-})();
+  },
+});
+
+new pimcore.bundle.ckeditor.editor();
