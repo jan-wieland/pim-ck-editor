@@ -21,6 +21,17 @@ class PimCkEditorBundle extends AbstractPimcoreBundle implements
         return "jan-wieland/pim-ck-editor";
     }
 
+    public function getExtensionConfigPath(): string
+    {
+        return $this->getPath() . "/src/Resources/config";
+    }
+
+    // Wenn du diese Methode überschreibst, findet assets:install den richtigen Ordner:
+    public function getPublicPath(): string
+    {
+        return $this->getPath() . "/src/Resources/public";
+    }
+
     public function getJsPaths(): array
     {
         return ["/bundles/pimckeditor/js/pimcore-ckeditor-startup.js"];
