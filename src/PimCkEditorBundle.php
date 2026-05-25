@@ -13,7 +13,7 @@ class PimCkEditorBundle extends AbstractPimcoreBundle implements
 
     public function getPath(): string
     {
-        return __DIR__;
+        return dirname(__DIR__);
     }
 
     public function getComposerPackageName(): string
