@@ -13,23 +13,12 @@ class PimCkEditorBundle extends AbstractPimcoreBundle implements
 
     public function getPath(): string
     {
-        return dirname(__DIR__);
+        return __DIR__;
     }
 
     public function getComposerPackageName(): string
     {
         return "jan-wieland/pim-ck-editor";
-    }
-
-    public function getExtensionConfigPath(): string
-    {
-        return $this->getPath() . "/src/Resources/config";
-    }
-
-    // Wenn du diese Methode überschreibst, findet assets:install den richtigen Ordner:
-    public function getPublicPath(): string
-    {
-        return $this->getPath() . "/src/Resources/public";
     }
 
     public function getJsPaths(): array
